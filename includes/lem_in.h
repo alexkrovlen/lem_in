@@ -20,7 +20,7 @@ typedef struct		s_room
 	int				coord_x;
 	int				coord_y;
 	int				status;
-	struct s_room	*room_list;
+	struct s_room	*next;
 }					t_room;
 
 typedef struct		s_ways

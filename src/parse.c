@@ -34,14 +34,35 @@ int	is_hash(char *str)
 		return(0);	
 }
 
+t_room	*detect_room(t_anthill *anthill, char *line)
+{
+	t_room *room;
+	
+
+	return (room);
+}
+
+int	is_room(char *str)
+{
+
+}
+
 static void	check_rooms(t_anthill *anthill)
 {
 	char	*line;
+	t_room	*room;
 
 	while (get_next_line(0, &line) > 0)
 	{
-		if(is_hash == 1 || is_hash == 2)
-			map_add(anthill->map, )
+		if(is_hash != 0)
+		{
+			map_add(&(anthill->map), ft_strdup(line));
+			free(line);
+		}
+		else if (is_room(line))
+		{
+			room = detect_room(anthill, line)
+		}
 	}
 }
 
