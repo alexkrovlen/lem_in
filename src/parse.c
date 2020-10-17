@@ -34,34 +34,58 @@ int	is_hash(char *str)
 		return(0);	
 }
 
-t_room	*detect_room(t_anthill *anthill, char *line)
+void	detect_room(t_anthill *anthill, char *line, int *status)
 {
-	t_room *room;
+	char	**array;
 	
-
-	return (room);
+	array = ft_strsplit(line, ' ');
+	if (*status == 3)
+		*status = 0;
+	room_add(anthill, room_new(array[0], ft_atoi(array[1]), ft_atoi(array[2]), *status));
+	if (*status == 1)
+		anthill->start = anthill->num_of_rooms;
+	if (*status == 2)
+		anthill->end = anthill->num_of_rooms;
+	*status = 0;
+	anthill->num_of_rooms++;
+	ft_free_split(array, 3);
+	return ;
 }
 
 int	is_room(char *str)
 {
+	char	**array;
 
+	if (ft_word_count(str, ' ') != 3)
+		return (0);
+	array = ft_strsplit(str, ' ');
+	if (array[0][0] == 'L' || ft_isdigit(ft_atoi(array[1])) == 0 || ft_isdigit(ft_atoi(array[2])) == 0)
+	{printf("!\n");
+		ft_free_split(array, 3);
+		exit_error ();
+	}
+	ft_free_split(array, 3);
+	return (1);
 }
 
 static void	check_rooms(t_anthill *anthill)
 {
 	char	*line;
-	t_room	*room;
+	int		status;
 
+	status = 0;
 	while (get_next_line(0, &line) > 0)
 	{
-		if(is_hash != 0)
+		printf("line = %s\n", line);
+		if(is_hash(line) != 0)
 		{
+			status = is_hash(line);printf("status = %d\n", status);
 			map_add(&(anthill->map), ft_strdup(line));
 			free(line);
 		}
 		else if (is_room(line))
 		{
-			room = detect_room(anthill, line)
+			detect_room(anthill, line, &status);
 		}
 	}
 }

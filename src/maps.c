@@ -19,11 +19,11 @@ void			map_add(t_map **head, char *str)
 	t_map	*new;
 
 	if (!(*head))
-		*head = ft_map_create(str);
+		*head = map_create(str);
 	else
 	{
 		new = (*head);
-		(*head)->next = ft_map_create(str);
+		(*head)->next = map_create(str);
 		(*head) = (*head)->next;
 		(*head)->prev = new;
 	}

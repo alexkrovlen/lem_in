@@ -53,6 +53,9 @@ typedef struct		s_anthill
 void				parse(t_anthill *anthill);
 t_anthill			*init_anthill(void);
 void				map_add(t_map **head, char *str);
-void	exit_error(void);
+void				exit_error(void);
+void  				ft_free_split(char **str, int j);
+void				room_add(t_anthill *anthill, t_room *room);
+t_room				*room_new(char *name, int x, int y, int status);
 
 #endif
