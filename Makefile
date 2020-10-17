@@ -38,6 +38,7 @@ SRCS_NAME = parse.c \
 			maps.c \
 			free.c \
 			room.c \
+			help.c \
 
 SRCS = main.c $(SRCS_NAME)
 

@@ -57,5 +57,6 @@ void				exit_error(void);
 void  				ft_free_split(char **str, int j);
 void				room_add(t_anthill *anthill, t_room *room);
 t_room				*room_new(char *name, int x, int y, int status);
+int			ft_atoi_new(char *str);
 
 #endif

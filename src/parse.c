@@ -59,7 +59,7 @@ int	is_room(char *str)
 	if (ft_word_count(str, ' ') != 3)
 		return (0);
 	array = ft_strsplit(str, ' ');
-	if (array[0][0] == 'L' || ft_isdigit(ft_atoi(array[1])) == 0 || ft_isdigit(ft_atoi(array[2])) == 0)
+	if (array[0][0] == 'L' || ft_isdigit(ft_atoi_new(array[1])) == 0 || ft_isdigit(ft_atoi_new(array[2])) == 0)
 	{printf("!\n");
 		ft_free_split(array, 3);
 		exit_error ();
