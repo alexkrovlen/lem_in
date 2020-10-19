@@ -10,8 +10,8 @@ t_anthill		*init_anthill(void)
 	anthill->start = -1;
 	anthill->end = -1;
 	anthill->room_list = NULL;
-	//anthill->table_name = NULL;
-	//anthill->table_paths = NULL;
+	anthill->table_name = NULL;
+	anthill->table_links = NULL;
 	anthill->head_ways = NULL;
 	anthill->map = NULL;
 	anthill->num_ants = 0;

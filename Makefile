@@ -39,6 +39,7 @@ SRCS_NAME = parse.c \
 			free.c \
 			room.c \
 			help.c \
+			print.c \
 
 SRCS = main.c $(SRCS_NAME)
 

@@ -6,7 +6,7 @@ int main(void)
 
 	anthill = init_anthill();
 	parse(anthill);
-	printf("ants = %d\n", anthill->num_ants);
-	printf("start\n");
+	//printf("ants = %d\n", anthill->num_ants);
+	printf("main\n");
 	return (0);
 }

@@ -38,8 +38,8 @@ typedef struct		s_anthill
 	int				num_of_rooms;
 	t_room			*room_list;
 	t_ways			*head_ways;
-	//int			**table_paths;
-	//char			**table_name;
+	int				**table_links;
+	char			**table_name;
 	int				start;
 	int				end;
 	t_map			*map;
@@ -57,6 +57,12 @@ void				exit_error(void);
 void  				ft_free_split(char **str, int j);
 void				room_add(t_anthill *anthill, t_room *room);
 t_room				*room_new(char *name, int x, int y, int status);
-int			ft_atoi_new(char *str);
+int					ft_atoi_new(char *str);
+void				detect_room(t_anthill *anthill, char *line, int *status);
+int					is_room(char *str);
+int					is_hash(char *str);
+int					is_links(char *str);
+void 				print_table(t_anthill *anthill);
+void 				print_map(t_anthill *anthill);
 
 #endif
