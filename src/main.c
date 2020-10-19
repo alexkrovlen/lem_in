@@ -8,5 +8,6 @@ int main(void)
 	parse(anthill);
 	//printf("ants = %d\n", anthill->num_ants);
 	printf("main\n");
+	algo(anthill);
 	return (0);
 }

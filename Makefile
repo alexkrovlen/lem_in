@@ -40,6 +40,7 @@ SRCS_NAME = parse.c \
 			room.c \
 			help.c \
 			print.c \
+			algo.c
 
 SRCS = main.c $(SRCS_NAME)
 

@@ -64,5 +64,5 @@ int					is_hash(char *str);
 int					is_links(char *str);
 void 				print_table(t_anthill *anthill);
 void 				print_map(t_anthill *anthill);
-
+void				algo(t_anthill *anthill);
 #endif
