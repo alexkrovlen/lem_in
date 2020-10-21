@@ -32,6 +32,11 @@ typedef struct		s_ways
 	struct s_path	*next;
 }					t_ways;
 
+typedef struct		s_queue
+{
+	int				num;
+	struct s_queue	*next;
+}					t_queue;
 
 typedef struct		s_anthill
 {
@@ -44,6 +49,11 @@ typedef struct		s_anthill
 	int				end;
 	t_map			*map;
 	int				num_ants;
+	int				*used;
+	int				*parent;
+	int				*path_len;
+	int				max_path_len;
+	int				num_of_paths;
 }					t_anthill;
 
 # define START 1
@@ -66,4 +76,8 @@ void 				print_table(t_anthill *anthill);
 void 				print_map(t_anthill *anthill);
 void				this_is_match(t_anthill *anthill);
 void				algo(t_anthill *anthill);
+void				algo_bfs(t_anthill *anthill);
+t_queue				*push_queue(t_queue *queue, int n);
+t_queue				*pop_queue(t_queue *q);
+int		empty_queue(t_queue *q);
 #endif
