@@ -1,77 +1,36 @@
 # include "lem_in.h"
 
-void 	algo(t_anthill *anthill)
+int 	start_end_neighbor(t_anthill *anthill)
 {
-	int *shortest_way;
-	int *flag;
-	int i;
-	int j;
-	int min;
-	int m;
+	int 	*tmp;
 
+	tmp = anthill->table_links[anthill->start];
+	if (tmp[anthill->end] == 1)
+		return (1);
+	return (0);
+}
+
+int start_have_one_link(t_anthill *anthill)
+{
+	int		*tmp;
+	int		i;
+	int		sum;
+
+	tmp = anthill->table_links[anthill->start];
+	sum = 0;
 	i = 0;
-	if (!(shortest_way = (int*)ft_memalloc(sizeof(int) * anthill->num_of_rooms))
-		|| !(flag = (int*)ft_memalloc(sizeof(int) * anthill->num_of_rooms)))
-		exit_error(); //free all
 	while(i < anthill->num_of_rooms)
 	{
-		shortest_way[i] = 9999;
-		flag[i] = 0;
+		sum = sum + tmp[i];
+		i++;
 	}
-	shortest_way[anthill->start] = 0;
-	//flag[anthill->start] = 1;
-	i = 0;
-	j = 0;
-	while (m < 9999)
-	{
-		i = min_vertex;
-		flag[anthill->start] = 1;
-		j = 0;
-		while (++j < anthill->num_of_rooms)
-		{
-			if (shortest_way[i] + anthill->table_links[i][j] < shortest_way[j])
-			{
-				shortest_way[j] = shortest_way[i] + anthill->table_links[i][j];
-			}
-		}
-		m = 9999;
-		j = 0;
-		while (++j < anthill->num_of_rooms)
-		{
-			if (!flaf[j] && shortest_way[j] < m)
-			{
-				m = shortest_way[j];
-				min_vertex = j;
-			}
-		}
-	}
-	
+	if (sum == 1)
+		return (1);
+	return (0);
+}
 
-
-
-
-	/*while(i < anthill->num_of_rooms)
-	{
-		min = 9999;
-		m = 0;
-		while (m < anthill->num_of_rooms && flag[i] == 0 && i)
-		{
-			if (shortest_way[m] < min)
-			{
-				min = shortest_way[m];
-				i = m;
-			}
-			m++;
-		}
-		while (j < anthill->num_of_rooms)
-		{
-			if (anthill->table_links[i][j] == 1)
-				if (min + anthill->table_links[i][j] < shortest_way[i])
-					shortest_way[i] = min + anthill->table_links[i][j];
-			j++;
-		}
-		flag[i] = 1;
-	}*/
-
-	
+void 	algo(t_anthill *anthill)
+{
+	if (start_end_neighbor(anthill) && start_have_one_link(anthill))
+		this_is_match(anthill);
 }

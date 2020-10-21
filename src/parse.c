@@ -188,8 +188,9 @@ static void	check_rooms(t_anthill *anthill)
 
 void		parse(t_anthill *anthill)
 {
-	anthill->num_ants = count_of_ants(anthill);
-	//printf("ants = %d\n", anthill->num_ants);
+	if ((anthill->num_ants = count_of_ants(anthill)) <= 0)
+		exit_error ();
+	printf("ants = %d\n", anthill->num_ants);
 	check_rooms(anthill);
 	print_table(anthill);
 	print_map(anthill);

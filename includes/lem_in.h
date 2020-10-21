@@ -38,7 +38,7 @@ typedef struct		s_anthill
 	int				num_of_rooms;
 	t_room			*room_list;
 	t_ways			*head_ways;
-	int				**table_links;
+	int				**table_links; // можно попробовать сделать структуру соседей чтоб потом удалять
 	char			**table_name;
 	int				start;
 	int				end;
@@ -64,5 +64,6 @@ int					is_hash(char *str);
 int					is_links(char *str);
 void 				print_table(t_anthill *anthill);
 void 				print_map(t_anthill *anthill);
+void				this_is_match(t_anthill *anthill);
 void				algo(t_anthill *anthill);
 #endif
