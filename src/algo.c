@@ -52,7 +52,7 @@ static void	bzero_for_alg(t_anthill *anthill)
 	}
 }
 
-static int find_all_ways(t_anthill *anthill)
+static int find_way(t_anthill *anthill)
 {
 	algo_bfs(anthill);
 	printf("neighbor \n");
@@ -62,7 +62,11 @@ static int find_all_ways(t_anthill *anthill)
 		printf("used = %d parent = %d path_len = %d\n", anthill->used[i], anthill->parent[i], anthill->path_len[i]);
 		i++;
 	}
-	return (0);
+	if (!anthill->used[anthill->end] ||
+		anthill->max_path_len - anthill->path_len[anthill->end] < 2)
+		return (0);
+	all_ways(anthill);
+	return (1);
 }
 
 void 	algo(t_anthill *anthill)
@@ -72,7 +76,7 @@ void 	algo(t_anthill *anthill)
 	init_for_alg(anthill);
 	bzero_for_alg(anthill);
 	anthill->num_of_paths = 0;
-	while (find_all_ways(anthill))
+	while (find_way(anthill))
 	{
 		//printf("ways = %d\n", anthill->num_of_paths);
 	}

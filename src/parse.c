@@ -190,11 +190,11 @@ void		parse(t_anthill *anthill)
 {
 	if ((anthill->num_ants = count_of_ants(anthill)) <= 0)
 		exit_error ();
-	printf("ants = %d\n", anthill->num_ants);
+	//printf("ants = %d\n", anthill->num_ants);
 	check_rooms(anthill);
 	print_table(anthill);
 	print_map(anthill);
-	printf("start = %d\n", anthill->start);
-	printf("end = %d\n", anthill->end);
-	printf("ok\n");
+	//printf("start = %d\n", anthill->start);
+	//printf("end = %d\n", anthill->end);
+	//printf("ok\n");
 }

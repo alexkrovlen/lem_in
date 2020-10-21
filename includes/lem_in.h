@@ -79,5 +79,5 @@ void				algo(t_anthill *anthill);
 void				algo_bfs(t_anthill *anthill);
 t_queue				*push_queue(t_queue *queue, int n);
 t_queue				*pop_queue(t_queue *q);
-int		empty_queue(t_queue *q);
+int					empty_queue(t_queue *q);
 #endif

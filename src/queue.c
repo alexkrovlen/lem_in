@@ -26,7 +26,7 @@ t_queue *new_queue(int n)
 	if (!(new = (t_queue *)malloc(sizeof(t_queue))))
 		return (NULL);
 	new->num = n;
-	new->next = NULL;printf("num = %d\n", new->num);
+	new->next = NULL;//printf("num = %d\n", new->num);
 	return (new);
 }
 
@@ -36,7 +36,7 @@ t_queue *push_queue(t_queue *queue, int n)
 
 	if (queue == NULL)
 	{
-		queue = new_queue(n);printf("num2 = %d\n", queue->num);
+		queue = new_queue(n);//printf("num2 = %d\n", queue->num);
 		return (queue);
 	}
 	else
