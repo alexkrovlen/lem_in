@@ -23,14 +23,14 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
-typedef struct		s_ways
+typedef struct		s_way
 {
+	int				first_ant;
+	int				size_ant;
 	int				size_way;
 	int				*way;
-	int				size_ant;
-	//t_ant			*ant_head;
 	struct s_path	*next;
-}					t_ways;
+}					t_way;
 
 typedef struct		s_queue
 {
@@ -42,7 +42,7 @@ typedef struct		s_anthill
 {
 	int				num_of_rooms;
 	t_room			*room_list;
-	t_ways			*head_ways;
+	t_way			*head_ways;
 	int				**table_links; // можно попробовать сделать структуру соседей чтоб потом удалять
 	char			**table_name;
 	int				start;
@@ -53,7 +53,7 @@ typedef struct		s_anthill
 	int				*parent;
 	int				*path_len;
 	int				max_path_len;
-	int				num_of_paths;
+	int				num_of_ways;
 }					t_anthill;
 
 # define START 1
@@ -80,4 +80,5 @@ void				algo_bfs(t_anthill *anthill);
 t_queue				*push_queue(t_queue *queue, int n);
 t_queue				*pop_queue(t_queue *q);
 int					empty_queue(t_queue *q);
+void				all_ways(t_anthill *anthill);
 #endif

@@ -75,7 +75,7 @@ void 	algo(t_anthill *anthill)
 		this_is_match(anthill);
 	init_for_alg(anthill);
 	bzero_for_alg(anthill);
-	anthill->num_of_paths = 0;
+	anthill->num_of_ways = 0;
 	while (find_way(anthill))
 	{
 		//printf("ways = %d\n", anthill->num_of_paths);
