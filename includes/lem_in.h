@@ -29,7 +29,7 @@ typedef struct		s_way
 	int				size_ant;
 	int				size_way;
 	int				*way;
-	struct s_path	*next;
+	struct s_way	*next;
 }					t_way;
 
 typedef struct		s_queue
