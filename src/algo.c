@@ -173,24 +173,27 @@ static void set_ants_to_ways(t_anthill *anthill)
 	printf ("mod = %d\n\n", mod);
 	head = anthill->head_ways;
 	int count = 0;
-	int first_pr = 0;
-	int num_pr = 1;
-	int num_cur = 1;printf("1\n");
+	int first_ant_pr = 0;
+	int num_fr = 1;
+	int num_cur = 1;
+	int size_way_pr = 0;
+	
 	while (count != anthill->num_ants)
-	{
+	{printf("1\n\n");
 		head->size_ant = mod ? diff + 1 - head->size_way : diff - head->size_way;
 		count =  head->size_ant + count;
 		mod = mod ? mod - 1 : mod;
-		printf("head->first = %d\n", head->first_ant);
+		//printf("head->first = %d\n", head->first_ant);
 		if (head->first_ant == 1)
 			head->first_ant = head->first_ant;
 		else
-			head->first_ant = first_pr + num_cur - num_pr + 1;
-		printf("head->first = %d\n", head->first_ant);
-		first_pr = head->first_ant;
+			head->first_ant = (head->size_way - size_way_pr) * (num_cur - num_fr) + first_ant_pr + 1;
+		//printf("head->first = %d\n", head->first_ant);
+		first_ant_pr = head->first_ant;
 		num_cur++;
-		printf("first_pr = %d\n", first_pr);
-		printf("num_pr = %d\n\n", num_pr);
+		size_way_pr = head->size_way;
+		printf("first_pr = %d\n", first_ant_pr);
+		printf("num_pr = %d\n", num_fr);
 		printf("num_cur = %d\n\n", num_cur);
 		head = head->next;
 	}
