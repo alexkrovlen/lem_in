@@ -74,3 +74,41 @@ void 	algo(t_anthill *anthill)
 		}
 		flag[i] = 1;
 	}*/
+
+
+
+
+
+/*t_way *head;
+	t_way *head_next;
+	int count;
+	count = 0;
+	head_next = NULL;
+	head = NULL;
+	if (anthill->num_of_ways == 1)
+	{
+		while (count < anthill->num_ants)
+		{
+			count++;
+			head->size_ant++;
+		}
+	}
+	else
+	{
+		head = anthill->head_ways;
+		head_next = anthill->head_ways->next;
+		while (count < anthill->num_ants)
+		{
+			if (head->size_way + head->size_ant <= head_next->size_way + head_next->size_ant)
+			{
+				count++;
+				head->size_ant++;
+				printf("count = %d\n", count);
+			}
+			else if (head->size_way + head->size_ant > head_next->size_way + head_next->size_ant && head_next->next)
+			{
+				head = head_next;
+				head_next = head_next->next;
+			}
+		}
+	}*/

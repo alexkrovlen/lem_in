@@ -138,6 +138,64 @@ static t_anthill		*delete_rooms(t_anthill *anthill)
 	return (anthill);
 }
 
+static void set_ants_to_ways(t_anthill *anthill)
+{
+	t_way *h;
+	h = anthill->head_ways;
+	while (h)
+	{
+	printf ("anthill->num_of_ways = %d\n", anthill->num_of_ways);
+	printf (" head->size_ant = %d\n", h->size_ant);
+	//printf("max_size_way = %d\n", max_size_way);
+	printf("anthill->max_path_len = %d\n", anthill->max_path_len);
+	printf(" anthill->head_ways->size_way = %d\n\n", h->size_way);
+	printf("anthill->num_of_rooms = %d\n", anthill->num_of_rooms);
+	h = h->next;
+	}
+	t_way *head;
+	int size_way;
+	int diff;
+	int mod;
+
+	size_way = 0;
+	head = anthill->head_ways;
+	while (head)
+	{
+		size_way = size_way + head->size_way;
+		head = head->next;
+	}
+	anthill->max_path_len = size_way + anthill->num_ants;
+	diff = anthill->max_path_len / anthill->num_of_ways;
+	mod = anthill->max_path_len % anthill->num_of_ways;
+	printf ("\ndiff = %d\n", diff);
+	printf ("mod = %d\n\n", mod);
+	head = anthill->head_ways;
+	int count = 0;
+	while (count != anthill->num_ants)
+	{
+		head->size_ant = mod ? diff + 1 - head->size_way : diff - head->size_way;
+		count =  head->size_ant + count;
+		mod = mod ? mod - 1 : mod;
+		head->first_ant = 1 
+		head = head->next;
+	}
+
+	h = anthill->head_ways;
+	while (h)
+	{
+	printf ("\nh->size_ant = %d\n", h->size_ant);
+	printf("h->size_way = %d\n", h->size_way);
+	printf("h->first_ant = %d\n\n", h->first_ant);
+	printf("anthill->max_path_len = %d\n", anthill->max_path_len);
+	h = h->next;
+	}
+/*	if(anthill->head_ways->next == NULL)
+	{
+		while (anthill->head_ways->size_way)
+
+	}*/
+}
+
 void 	algo(t_anthill *anthill)
 {
 	if (start_end_neighbor(anthill) && start_have_one_link(anthill))
@@ -150,4 +208,5 @@ void 	algo(t_anthill *anthill)
 		anthill = delete_rooms(anthill);
 		//bzero_for_alg(anthill);
 	}
+	set_ants_to_ways(anthill);
 }

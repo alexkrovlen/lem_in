@@ -26,14 +26,6 @@ static t_way *new_way(t_anthill *anthill)
 	return (new);
 }
 
-static void set_ants_to_ways(t_anthill *anthill, int max_size_way)
-{
-	printf ("anthill->num_of_ways = %d\n", anthill->num_of_ways);
-	printf("max_size_way = %d\n", max_size_way);
-	printf("anthill->max_path_len = %d\n", anthill->max_path_len);
-	printf(" anthill->head_ways->size_way = %d\n\n", anthill->head_ways->size_way);
-}
-
 static void use_way(t_anthill *anthill, t_way *way)
 {
 	t_way	*tmp;
@@ -41,9 +33,9 @@ static void use_way(t_anthill *anthill, t_way *way)
 	if (!anthill->head_ways)
 	{
 		anthill->head_ways = way;
-		anthill->head_ways->size_ant = anthill->num_ants;
+		anthill->head_ways->size_ant = 0;
 		anthill->head_ways->first_ant = 1;
-		set_ants_to_ways(anthill, way->size_way);
+		//set_ants_to_ways(anthill, way->size_way);
 	}
 	else
 	{
@@ -51,7 +43,7 @@ static void use_way(t_anthill *anthill, t_way *way)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = way;
-		set_ants_to_ways(anthill, way->size_way);
+		//set_ants_to_ways(anthill, way->size_way);
 	}
 }
 
