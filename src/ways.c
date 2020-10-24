@@ -14,6 +14,7 @@ static t_way *new_way(t_anthill *anthill)
 		exit_error (); //free all
 	new->size_ant = 0;
 	new->size_way = len;
+	new->first_ant = 0;
 	new->next = NULL;
 	id_room = anthill->end;
 	i = 0;

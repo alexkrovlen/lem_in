@@ -146,12 +146,14 @@ static void set_ants_to_ways(t_anthill *anthill)
 	{
 	printf ("anthill->num_of_ways = %d\n", anthill->num_of_ways);
 	printf (" head->size_ant = %d\n", h->size_ant);
+		printf ("\nh->first_ant = %d\n", h->first_ant);
 	//printf("max_size_way = %d\n", max_size_way);
 	printf("anthill->max_path_len = %d\n", anthill->max_path_len);
 	printf(" anthill->head_ways->size_way = %d\n\n", h->size_way);
 	printf("anthill->num_of_rooms = %d\n", anthill->num_of_rooms);
 	h = h->next;
 	}
+	printf("11111111111111\n\n");
 	t_way *head;
 	int size_way;
 	int diff;
@@ -171,12 +173,25 @@ static void set_ants_to_ways(t_anthill *anthill)
 	printf ("mod = %d\n\n", mod);
 	head = anthill->head_ways;
 	int count = 0;
+	int first_pr = 0;
+	int num_pr = 1;
+	int num_cur = 1;printf("1\n");
 	while (count != anthill->num_ants)
 	{
 		head->size_ant = mod ? diff + 1 - head->size_way : diff - head->size_way;
 		count =  head->size_ant + count;
 		mod = mod ? mod - 1 : mod;
-		head->first_ant = 1 
+		printf("head->first = %d\n", head->first_ant);
+		if (head->first_ant == 1)
+			head->first_ant = head->first_ant;
+		else
+			head->first_ant = first_pr + num_cur - num_pr + 1;
+		printf("head->first = %d\n", head->first_ant);
+		first_pr = head->first_ant;
+		num_cur++;
+		printf("first_pr = %d\n", first_pr);
+		printf("num_pr = %d\n\n", num_pr);
+		printf("num_cur = %d\n\n", num_cur);
 		head = head->next;
 	}
 
