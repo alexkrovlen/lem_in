@@ -9,5 +9,7 @@ int main(void)
 	//printf("ants = %d\n", anthill->num_ants);
 	//printf("main\n");
 	algo(anthill);
+	print_map(anthill);
+	run_ants(anthill);
 	return (0);
 }

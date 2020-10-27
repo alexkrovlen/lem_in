@@ -192,8 +192,8 @@ void		parse(t_anthill *anthill)
 		exit_error ();
 	//printf("ants = %d\n", anthill->num_ants);
 	check_rooms(anthill);
-	print_table(anthill);
-	print_map(anthill);
+	//print_table(anthill);
+	//print_map(anthill);
 	//printf("start = %d\n", anthill->start);
 	//printf("end = %d\n", anthill->end);
 	//printf("ok\n");

@@ -44,6 +44,7 @@ SRCS_NAME = parse.c \
 			algo_bfs.c \
 			queue.c \
 			ways.c \
+			run.c \
 
 SRCS = main.c $(SRCS_NAME)
 

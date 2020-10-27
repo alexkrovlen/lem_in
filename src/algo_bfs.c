@@ -60,7 +60,7 @@ void		algo_bfs(t_anthill *anthill)
 		queue = pop_queue(queue);
 		if (id_room == anthill->end)
 			continue ;
-		queue = find_id_room(anthill, queue, id_room);//print_table(anthill);
+		queue = find_id_room(anthill, queue, id_room);
 	}
 	while (!empty_queue(queue))
 	{

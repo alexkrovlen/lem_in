@@ -23,8 +23,17 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
+typedef struct		s_ant
+{
+	int				num_ant;
+	//int				num_way;
+	struct s_ant	*next;
+}					t_ant;
+
 typedef struct		s_way
 {
+	int				zero;
+	t_ant			*struct_ant;
 	int				first_ant;
 	int				size_ant;
 	int				size_way;
@@ -81,4 +90,7 @@ t_queue				*push_queue(t_queue *queue, int n);
 t_queue				*pop_queue(t_queue *q);
 int					empty_queue(t_queue *q);
 void				all_ways(t_anthill *anthill);
+void				run_ants(t_anthill *anthill);
+void 				print_way(int **res, t_anthill *anthill, int max_len);
+
 #endif
