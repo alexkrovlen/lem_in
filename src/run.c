@@ -5,20 +5,42 @@ static int find_num_ant(t_anthill *anthill, t_way *head)
 	int num_ant;
 	int num_way;
 	t_way *h;
+	int *str;
+	int i;
 
+	i = 0;
+	h = head;
+	str = (int *)ft_memalloc(sizeof(int) * (anthill->num_of_ways - 1));
+	while (h->next)
+	{
+		str[i] = h->next->first_ant;
+		i++;
+		h = h->next;
+	}
+	str[i] = '\0';
+	i = 0;
 	num_ant = head->first_ant;
 	num_way = 1;
-	h = anthill->head_ways;printf("head->first_ant = %d\n", head->first_ant);
+	h = anthill->head_ways;
+	printf("head->first_ant = %d\n", head->first_ant);
 	while (head->first_ant != h->first_ant)
 	{
 		num_way++;
 		h = h->next;
-	}printf ("num way = %d\n", num_way);
+	}
+	printf ("num way = %d\n", num_way);
 	while (head->struct_ant->next)
 		head->struct_ant = head->struct_ant->next;
-	printf("!\n");
-	if (head->next && head->struct_ant->num_ant + num_way >= head->next->first_ant)
-		num_way++;
+	printf ("head->struct_ant-.num_ant = %d\n", head->struct_ant->num_ant);
+	if (head->struct_ant->num_ant + num_way >= str[i])
+	{
+		while (head->struct_ant->num_ant + num_way >= str[i] && str[i] != '\0')
+		{
+			num_way++;
+			i++;
+		}
+	}
+	printf ("num way2 = %d\n\n", num_way);
 	num_ant = head->struct_ant->num_ant + num_way; 
 	return (num_ant);
 	// проверить как будет работать на 3 и более путях
@@ -96,6 +118,7 @@ void run_ants(t_anthill *anthill)
 	{
 		ttt = 1;
 		tmp = head->struct_ant;
+		printf("head->size_ant = %d\n", head->size_ant);
 		while (ttt < head->size_ant)
 		{
 			head->struct_ant->next = new_ant(anthill, head);
@@ -122,7 +145,7 @@ void run_ants(t_anthill *anthill)
 	// изменить запись
 	//идти сначала пока есть head
 	// смотреть какой муравей
-	// искать этот номер - 1 в таблице res[i] и писать туда строку
+	// искать этот номер - 1 в таблице res[i] и писать туда строку   mlmok
 	while (i < anthill->num_ants)
 	{
 		j = 0;

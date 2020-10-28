@@ -119,9 +119,14 @@ static void set_ants_to_ways(t_anthill *anthill)
 	int num_fr = 1;
 	int num_cur = 1;
 	int size_way_pr = 0;
-	
-	while (count != anthill->num_ants)
+	printf("diff = %d \n", diff);
+	printf("mod = %d\n", mod);
+	while (count < anthill->num_ants)
 	{//printf("1\n\n");
+	printf("WHAAAATTT???\n\n");
+	printf("head->size_ant = %d\n", head->size_ant);
+	printf("count = %d\n", count);
+	printf("anthill->num_ants = %d\n", anthill->num_ants);
 		head->size_ant = mod ? diff + 1 - head->size_way : diff - head->size_way;
 		count =  head->size_ant + count;
 		mod = mod ? mod - 1 : mod;
@@ -136,6 +141,10 @@ static void set_ants_to_ways(t_anthill *anthill)
 		//printf("first_pr = %d\n", first_ant_pr);
 		//printf("num_pr = %d\n", num_fr);
 		//printf("num_cur = %d\n\n", num_cur);
+		printf("\n\n");
+	printf("head->size_ant = %d\n", head->size_ant);
+	printf("count = %d\n", count);
+	printf("anthill->num_ants = %d\n\n", anthill->num_ants);
 		head = head->next;
 	}
 }
