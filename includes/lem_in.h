@@ -92,5 +92,6 @@ int					empty_queue(t_queue *q);
 void				all_ways(t_anthill *anthill);
 void				run_ants(t_anthill *anthill);
 void 				print_way(int **res, t_anthill *anthill, int max_len);
+void				print_ants(int **res, t_anthill *anthill, int max_len);
 
 #endif
