@@ -45,7 +45,7 @@ void	this_is_match(t_anthill *anthill)
 	i = 1;
 	while (i <= anthill->num_ants)
 	{
-		ft_printf("L%d-%d ", i, anthill->end);
+		ft_printf("L%d-%s ", i, anthill->table_name[anthill->end]);
 		i++;
 	}
 	ft_printf("\n");

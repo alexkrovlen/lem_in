@@ -129,8 +129,10 @@ void run_ants(t_anthill *anthill)
 		head = head->next;
 	}
 	head = anthill->head_ways;printf("START\n\n");
+	printf("num ants = %d\n", anthill->num_ants);
 	while (head)
-	{
+	{printf("size ant = %d\n", head->size_ant);
+	printf("size way = %d\n", head->size_way);
 		while (head->struct_ant)
 		{
 			printf("num_ant = %d  ", head->struct_ant->num_ant);

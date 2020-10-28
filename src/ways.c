@@ -24,12 +24,7 @@ static t_way *new_way(t_anthill *anthill)
 		new->way[len - i - 1] = id_room;
 		id_room = anthill->parent[id_room];
 		i++;
-	}
-	//printf ("id_room = %d\n", id_room);
-	//printf ("anthill->start = %d\n", anthill->start);
-	/*if (id_room != anthill->start)
-		exit_error ();*/
-	
+	}	
 	return (new);
 }
 
@@ -43,7 +38,6 @@ static void use_way(t_anthill *anthill, t_way *way)
 		anthill->head_ways->size_ant = 0;
 		anthill->head_ways->first_ant = 1;
 		anthill->head_ways->zero = 0;
-		//set_ants_to_ways(anthill, way->size_way);
 	}
 	else
 	{
@@ -51,7 +45,6 @@ static void use_way(t_anthill *anthill, t_way *way)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = way;
-		//set_ants_to_ways(anthill, way->size_way);
 	}
 }
 

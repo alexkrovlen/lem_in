@@ -69,7 +69,7 @@ static t_anthill		*delete_rooms(t_anthill *anthill)
 	i = anthill->parent[anthill->end];
 	j = anthill->end;
 	while (anthill->used[anthill->start] != 0)
-	{//printf("!\n");
+	{
 		if (j == anthill->start || j == anthill->end)
 		{
 			anthill->used[j] = 0;
@@ -110,27 +110,38 @@ static void set_ants_to_ways(t_anthill *anthill)
 		size_way = size_way + head->size_way;
 		head = head->next;
 	}
-	anthill->max_path_len = size_way + anthill->num_ants;
-	diff = anthill->max_path_len / anthill->num_of_ways;
-	mod = anthill->max_path_len % anthill->num_of_ways;
+	//anthill->max_path_len = size_way + anthill->num_ants;
+	//diff = anthill->max_path_len / anthill->num_of_ways;
+	//mod = anthill->max_path_len % anthill->num_of_ways;
 	head = anthill->head_ways;
-	int count = 0;
 	int first_ant_pr = 0;
 	int num_fr = 1;
 	int num_cur = 1;
 	int size_way_pr = 0;
-	printf("diff = %d \n", diff);
-	printf("mod = %d\n", mod);
-	while (count < anthill->num_ants)
-	{//printf("1\n\n");
-	printf("WHAAAATTT???\n\n");
-	printf("head->size_ant = %d\n", head->size_ant);
-	printf("count = %d\n", count);
-	printf("anthill->num_ants = %d\n", anthill->num_ants);
-		head->size_ant = mod ? diff + 1 - head->size_way : diff - head->size_way;
-		count =  head->size_ant + count;
-		mod = mod ? mod - 1 : mod;
-		//printf("head->first = %d\n", head->first_ant);
+
+	int i;
+	i = 0;
+	t_way *h;
+	h = anthill->head_ways;
+	while (h->next)
+		h = h->next;
+	int max_way_len;
+	max_way_len = h->size_way;
+	while (head)
+	{
+		if (i < anthill->num_ants)
+		{
+			if (max_way_len - head->size_way + i < anthill->num_ants)
+			{
+				i = max_way_len - head->size_way + i;
+				head->size_ant = max_way_len - head->size_way;
+			}
+			else
+			{
+				head->size_ant = anthill->num_ants - i;
+				i = anthill->num_ants;
+			}
+		}
 		if (head->first_ant == 1)
 			head->first_ant = head->first_ant;
 		else
@@ -138,28 +149,62 @@ static void set_ants_to_ways(t_anthill *anthill)
 		first_ant_pr = head->first_ant;
 		num_cur++;
 		size_way_pr = head->size_way;
-		//printf("first_pr = %d\n", first_ant_pr);
-		//printf("num_pr = %d\n", num_fr);
-		//printf("num_cur = %d\n\n", num_cur);
-		printf("\n\n");
-	printf("head->size_ant = %d\n", head->size_ant);
-	printf("count = %d\n", count);
-	printf("anthill->num_ants = %d\n\n", anthill->num_ants);
+		head = head->next;
+	}
+	diff = (anthill->num_ants - i) / anthill->num_of_ways;
+	mod = (anthill->num_ants - i) % anthill->num_of_ways;
+	head = anthill->head_ways;
+	if (diff == 0 && mod == 0)
+		return ;
+	while (head)
+	{
+		head->size_ant = mod ? (diff + 1 + head->size_ant) : (diff + head->size_ant);
+		mod = mod ? mod - 1 : mod;
+		head = head->next;
+			
+	}
+}
+
+static void check_first_and_size(t_anthill *anthill)
+{
+	t_way *head;
+
+	head = anthill->head_ways;
+	while (head)
+	{
+		if (head->size_ant == 0)
+			head->first_ant = 0;
 		head = head->next;
 	}
 }
 
 void 	algo(t_anthill *anthill)
 {
-	if (start_end_neighbor(anthill) && start_have_one_link(anthill))
+	int flag;
+
+	
+	flag = start_end_neighbor(anthill);
+	if ( flag == 1 && start_have_one_link(anthill))
 		this_is_match(anthill);
+	
 	init_for_alg(anthill);
 	bzero_for_alg(anthill);
 	anthill->num_of_ways = 0;
+	if (flag == 1)
+	{
+		anthill->parent[anthill->end] = anthill->start;
+		anthill->path_len[anthill->end] = 1;
+		all_ways(anthill);
+		anthill->table_links[anthill->end][anthill->start] = 0;
+		anthill->table_links[anthill->start][anthill->end] = 0;
+		anthill->path_len[anthill->end] = -1;
+		anthill->parent[anthill->end] = -1;
+	}
 	while (find_way(anthill))
 	{
 		anthill = delete_rooms(anthill);
 		//bzero_for_alg(anthill);
 	}
 	set_ants_to_ways(anthill);
+	check_first_and_size(anthill);
 }
