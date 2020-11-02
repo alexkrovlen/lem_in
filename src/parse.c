@@ -3,7 +3,9 @@
 static int	count_of_ants(t_anthill *anthill)
 {
 	char	*line;
+	int 	res;
 
+	res = 0;
 	while(get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#' && line[1] != '#')
@@ -20,7 +22,9 @@ static int	count_of_ants(t_anthill *anthill)
 		else
 		{
 			map_add(&(anthill->map), ft_strdup(line));
-			return (ft_atoi(line));
+			res = ft_atoi(line);
+			free(line);
+			return (res);
 		}
 	}
 	return (0);
@@ -34,6 +38,8 @@ int	is_hash(char *str)
 		return (END);
 	else if (str[0] == '#' && str[1] != '#')
 		return (COMMENT);
+	else if (str[0] == '#' && str[1] == '#')
+		return (IGNOR);
 	else
 		return(0);	
 }
@@ -165,7 +171,7 @@ static void	check_rooms(t_anthill *anthill)
 			free(line);
 		}
 		else if (is_room(line))
-		{//printf("!\n");
+		{
 			detect_room(anthill, line, &status);
 			map_add(&(anthill->map), ft_strdup(line));
 			free(line);
@@ -191,7 +197,12 @@ void		parse(t_anthill *anthill)
 	if ((anthill->num_ants = count_of_ants(anthill)) <= 0)
 		exit_error ();
 	//printf("ants = %d\n", anthill->num_ants);
+	
 	check_rooms(anthill);
+	
+	//print_table(anthill);
+	if (anthill->table_links == NULL || anthill->room_list == NULL)
+	 	exit_error ();
 	//print_table(anthill);
 	//print_map(anthill);
 	//printf("start = %d\n", anthill->start);

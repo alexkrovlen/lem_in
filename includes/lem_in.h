@@ -68,6 +68,7 @@ typedef struct		s_anthill
 # define START 1
 # define END 2
 # define COMMENT 3
+# define IGNOR 4
 
 void				parse(t_anthill *anthill);
 t_anthill			*init_anthill(void);

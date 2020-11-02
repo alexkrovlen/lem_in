@@ -100,7 +100,7 @@ void run_ants(t_anthill *anthill)
 			res[i][j++] = -1;
 		i++;
 	}
-	//printf("!\n");
+	
 	//print_way( res, anthill, max_len);
 	i = 0;
 	int count;
@@ -129,28 +129,30 @@ void run_ants(t_anthill *anthill)
 		head = head->next;
 	}
 	head = anthill->head_ways;
-	/*printf("START\n\n");
+	/*t_way *h;
+	h = anthill->head_ways;
+	printf("START\n\n");
 	printf("num ants = %d\n", anthill->num_ants);
-	while (head)
-	{printf("size ant = %d\n", head->size_ant);
-	printf("size way = %d\n", head->size_way);
-		while (head->struct_ant)
+	while (h)
+	{printf("size ant = %d\n", h->size_ant);
+	printf("size way = %d\n", h->size_way);
+		while (h->struct_ant)
 		{
-			printf("num_ant = %d  ", head->struct_ant->num_ant);
-			head->struct_ant = head->struct_ant->next;
+			printf("num_ant = %d  ", h->struct_ant->num_ant);
+			h->struct_ant = h->struct_ant->next;
 		}
 		printf("\n");
-		head = head->next;
-	}
+		h = h->next;
+	}*/
 
-	head = anthill->head_ways;*/
 	//printf("STOP\n\n");
 	// изменить запись
 	//идти сначала пока есть head
 	// смотреть какой муравей
 	// искать этот номер - 1 в таблице res[i] и писать туда строку   mlmok
 //printf("fffff =%d\n", head->struct_ant->num_ant);
-	while (head)
+
+	while (head && head->size_ant > 0)
 	{
 		while (head->struct_ant)
 		{
@@ -161,7 +163,9 @@ void run_ants(t_anthill *anthill)
 			while (head->struct_ant->num_ant - 1 != i)
 				i++;
 			while (j < head->zero + head->size_way)
-			{
+			{// printf("j = %d\n", j);
+			// printf ("head->zero = %d\n", head->zero);
+			// printf("head->size_way = %d\n", head->size_way);
 				while (count++ < head->zero)
 					j++;
 				res[i][j] = head->way[w];
@@ -171,6 +175,7 @@ void run_ants(t_anthill *anthill)
 			head->zero++;
 			head->struct_ant = head->struct_ant->next;
 		}
+		//printf("!\n");
 		head = head->next;
 	}
 	/*while (i < anthill->num_ants)
