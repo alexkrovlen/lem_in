@@ -61,19 +61,20 @@ void				print_ants(int **res, t_anthill *anthill, int max_len)
 	j = 0;
 	
 	while (j < anthill->num_ants * max_len)
-	{
+	{//printf("!\n");
 		i = 0;
 		flag = 0;
 		while (i < anthill->num_ants)
-		{//printf("res = %d\n", res[i][j]);
+		{
+			//printf("res = %d\n", res[i][j]);
 			if (res[i][j] != -1)
-				printf("L%d-%s ", i+1, anthill->table_name[res[i][j]]);
+				ft_printf("L%d-%s ", i+1, anthill->table_name[res[i][j]]);
 			else
 				flag++;			
 			i++;
 		}
 		if (flag != anthill->num_ants)
-			printf("\n");
+			ft_printf("\n");
 		else
 			break ;
 		j++;

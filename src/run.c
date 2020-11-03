@@ -40,8 +40,11 @@ static int find_num_ant(t_anthill *anthill, t_way *head)
 			i++;
 		}
 	}
-	//printf ("num way2 = %d\n\n", num_way);
-	num_ant = head->struct_ant->num_ant + num_way; 
+	//printf ("num way = %d\n", num_way);
+	//printf("head->struct_ant->num_ant = %d\n\n", head->struct_ant->num_ant);
+	num_ant = head->struct_ant->num_ant + num_way;
+	if (num_ant > anthill->num_ants)
+		return (-1);
 	return (num_ant);
 	// проверить как будет работать на 3 и более путях
 	// когда переходит на 3 путь на 1ом пути цифры должны тоже прибавляться больше,
@@ -66,14 +69,55 @@ static t_ant	*new_ant(t_anthill *anthill, t_way *head)
 	return (list);
 }
 
-static t_ant *init_struct_ant(t_way *head)
+static t_ant *init_struct_ant(t_way *head, int num_ants)
 {
 	t_ant *struct_ant;
 
 	struct_ant = (t_ant *)ft_memalloc(sizeof(t_ant));
-	struct_ant->num_ant = head->first_ant;
+	if (head->first_ant > num_ants)
+		struct_ant->num_ant = 0;
+	else
+		struct_ant->num_ant = head->first_ant;
 	struct_ant->next = NULL;
 	return (struct_ant);
+}
+
+static void free_last_list(t_ant *ant)
+{
+	t_ant *list;
+
+	list = ant;
+	while (ant->next->next)
+	{
+		ant = ant->next;
+	}
+	free(ant->next);
+	ant->next = NULL;
+	ant = list;
+}
+
+static void size_ant(t_way *head)
+{
+	t_way *way;
+	t_ant *ant;
+	int count;
+
+	way = head;
+	//printf("way->struct_ant->num_ant = %d\n", way->struct_ant->num_ant);
+	while (head)
+	{
+		count = 0;
+		ant = head->struct_ant;
+		while (ant && ant->num_ant > 0)
+		{
+			ant = ant->next;
+			count++;
+		}
+		head->size_ant = count;
+		head = head->next;
+	}
+	head = way;
+	//printf("way = %d\n", head->first_ant);
 }
 
 void run_ants(t_anthill *anthill)
@@ -108,7 +152,7 @@ void run_ants(t_anthill *anthill)
 	head = anthill->head_ways;
 	while (head)
 	{
-		head->struct_ant = init_struct_ant(head);
+		head->struct_ant = init_struct_ant(head, anthill->num_ants);
 		head = head->next;
 	}
 	head = anthill->head_ways;
@@ -120,8 +164,14 @@ void run_ants(t_anthill *anthill)
 		tmp = head->struct_ant;
 		//printf("head->size_ant = %d\n", head->size_ant);
 		while (ttt < head->size_ant)
-		{
+		{//printf ("t = %d\n", ttt);
 			head->struct_ant->next = new_ant(anthill, head);
+			//printf("head->struct_ant->next  = %d\n", head->struct_ant->next->num_ant);
+			if (head->struct_ant->next->num_ant == -1)
+			{
+				free_last_list(head->struct_ant);
+				break ;
+			}
 			head->struct_ant = head->struct_ant->next;
 			ttt++;
 		}
@@ -129,33 +179,44 @@ void run_ants(t_anthill *anthill)
 		head = head->next;
 	}
 	head = anthill->head_ways;
-	/*t_way *h;
-	h = anthill->head_ways;
-	printf("START\n\n");
-	printf("num ants = %d\n", anthill->num_ants);
-	while (h)
-	{printf("size ant = %d\n", h->size_ant);
-	printf("size way = %d\n", h->size_way);
-		while (h->struct_ant)
-		{
-			printf("num_ant = %d  ", h->struct_ant->num_ant);
-			h->struct_ant = h->struct_ant->next;
-		}
-		printf("\n");
-		h = h->next;
-	}*/
-
+	// t_way *h;
+	// h = anthill->head_ways;
+	// printf("START\n\n");
+	// printf("num ants = %d\n", anthill->num_ants);
+	// while (h)
+	// {printf("size ant = %d\n", h->size_ant);
+	// printf("size way = %d\n", h->size_way);
+	// 	while (h->struct_ant)
+	// 	{
+	// 		printf("num_ant = %d  ", h->struct_ant->num_ant);
+	// 		h->struct_ant = h->struct_ant->next;
+	// 	}
+	// 	printf("\n");
+	// 	h = h->next;
+	// }
+//printf("STOP\n\n");
 	//printf("STOP\n\n");
 	// изменить запись
 	//идти сначала пока есть head
 	// смотреть какой муравей
 	// искать этот номер - 1 в таблице res[i] и писать туда строку   mlmok
 //printf("fffff =%d\n", head->struct_ant->num_ant);
+	//printf("head->struct_ant->num_ant =%d\n", head->struct_ant->num_ant);
+	size_ant(head);
+	//printf("head->struct_ant->num_ant =%d\n\n", head->struct_ant->num_ant);
+	// printf("head->size_ant = %d\n", head->size_ant);
+	// printf("head->size_way = %d\n", head->size_way);
+	// printf("STOP\n\n");
 
+	//printf("head-> =%d\n", head->first_ant);
 	while (head && head->size_ant > 0)
 	{
+		// printf("head->size_ant = %d\n", head->size_ant);
+		// printf("head->size_way = %d\n", head->size_way);
+		
 		while (head->struct_ant)
 		{
+			//printf("head->struct_ant->num_ant = %d\n", head->struct_ant->num_ant);
 			i = 0;
 			w = 0;
 			count = 0;

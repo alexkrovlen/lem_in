@@ -112,7 +112,7 @@ static void set_ants_to_ways(t_anthill *anthill)
 	}
 	//anthill->max_path_len = size_way + anthill->num_ants;
 	//diff = anthill->max_path_len / anthill->num_of_ways;
-	//mod = anthill->max_path_len % anthill->num_of_ways;
+	mod = anthill->max_path_len % anthill->num_of_ways;
 	head = anthill->head_ways;
 	int first_ant_pr = 0;
 	int num_fr = 1;
@@ -124,24 +124,38 @@ static void set_ants_to_ways(t_anthill *anthill)
 	t_way *h;
 	h = anthill->head_ways;
 	while (h->next)
+	{
+		//printf("h->size_way = %d\n", h->size_way);
 		h = h->next;
+	}
 	int max_way_len;
 	max_way_len = h->size_way;
+//	printf("max_way_len = %d\n\n", max_way_len);
+	diff = (size_way + anthill->num_ants) / anthill->num_of_ways;
+//	printf("diff = %d\n", diff);
 	while (head)
 	{
-		if (i < anthill->num_ants)
-		{
-			if (max_way_len - head->size_way + i < anthill->num_ants)
-			{
-				i = max_way_len - head->size_way + i;
-				head->size_ant = max_way_len - head->size_way;
-			}
-			else
-			{
-				head->size_ant = anthill->num_ants - i;
-				i = anthill->num_ants;
-			}
-		}
+		if (diff - head->size_way > 0)
+			head->size_ant = diff - head->size_way;
+		else
+			head->size_ant = 0;
+		// if (i < anthill->num_ants)
+		// {
+		// 	printf("head->size_way = %d\n", head->size_way);
+		// 	printf("max_way_len = %d\n", max_way_len);
+		// 	printf("anthill->num_ants = %d\n", anthill->num_ants);
+		// 	printf("i = %d\n\n", i);
+		// 	if (max_way_len - head->size_way + i < anthill->num_ants)
+		// 	{
+		// 		i = max_way_len - head->size_way + i;
+		// 		head->size_ant = max_way_len - head->size_way;
+		// 	}
+		// 	else
+		// 	{
+		// 		head->size_ant = anthill->num_ants - i;
+		// 		i = anthill->num_ants;
+		// 	}
+		//	}
 		if (head->first_ant == 1)
 			head->first_ant = head->first_ant;
 		else
@@ -151,18 +165,24 @@ static void set_ants_to_ways(t_anthill *anthill)
 		size_way_pr = head->size_way;
 		head = head->next;
 	}
-	diff = (anthill->num_ants - i) / anthill->num_of_ways;
-	mod = (anthill->num_ants - i) % anthill->num_of_ways;
-	head = anthill->head_ways;
-	if (diff == 0 && mod == 0)
-		return ;
-	while (head)
-	{
-		head->size_ant = mod ? (diff + 1 + head->size_ant) : (diff + head->size_ant);
-		mod = mod ? mod - 1 : mod;
-		head = head->next;
+	// diff = (anthill->num_ants - i) / anthill->num_of_ways;
+	// mod = (anthill->num_ants - i) % anthill->num_of_ways;
+	// head = anthill->head_ways;
+	// printf("head->size_ants = %d\n", head->size_ant);
+	// printf("head->size_ants = %d\n", head->next->size_ant);
+	// printf("head->size_ants = %d\n", head->next->next->size_ant);
+	// printf("head->size_ants = %d\n", head->next->next->next->size_ant);
+	// printf("head->size_ants = %d\n", head->next->next->next->next->size_ant);
+	// if (diff == 0 && mod == 0)
+	// 	return ;
+	// while (head)
+	// {
+	// 	head->size_ant = mod ? (diff + 1 + head->size_ant) : (diff + head->size_ant);
+	// 	mod = mod ? mod - 1 : mod;
+	// 	head = head->next;
 			
-	}
+	// }
+	//printf("head->size_ants = %d\n", head->size_ant);
 }
 
 static void check_first_and_size(t_anthill *anthill)
