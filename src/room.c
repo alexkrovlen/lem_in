@@ -1,9 +1,35 @@
-# include "lem_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   room.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/04 14:58:47 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/04 17:40:36 by fjessi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lem_in.h"
+
+void	check_coord(t_anthill *anthill, t_room *room)
+{
+	t_room *tmp;
+
+	tmp = anthill->room_list;
+	while (tmp)
+	{
+		if (tmp->coord_x == room->coord_x && tmp->coord_y == room->coord_y)
+			exit_error(); //free all
+		tmp = tmp->next;
+	}
+}
 
 void	room_add(t_anthill *anthill, t_room *room)
 {
 	if (room == NULL)
 		return ;
+	check_coord(anthill, room);
 	if (anthill->room_list == NULL)
 	{
 		anthill->room_list = room;

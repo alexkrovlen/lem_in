@@ -1,4 +1,16 @@
-# include "lem_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   queue.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/04 14:58:34 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/04 16:57:51 by fjessi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lem_in.h"
 
 int		empty_queue(t_queue *q)
 {
@@ -10,16 +22,12 @@ t_queue	*pop_queue(t_queue *q)
 	t_queue *tmp;
 
 	if (q == NULL)
-		return NULL;
-	/*tmp = q;
-	tmp = tmp->next;
-	//free(q);
-	q = tmp;*/
+		return (NULL);
 	tmp = q->next;
 	return (tmp);
 }
 
-t_queue *new_queue(int n)
+t_queue	*new_queue(int n)
 {
 	t_queue *new;
 
@@ -30,7 +38,7 @@ t_queue *new_queue(int n)
 	return (new);
 }
 
-t_queue *push_queue(t_queue *queue, int n)
+t_queue	*push_queue(t_queue *queue, int n)
 {
 	t_queue *tmp;
 

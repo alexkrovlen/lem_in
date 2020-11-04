@@ -1,4 +1,16 @@
-# include "lem_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo_bfs.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/04 14:39:19 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/04 14:40:03 by fjessi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lem_in.h"
 
 t_queue		*find_id_room(t_anthill *anthill, t_queue *queue, int id)
 {
@@ -36,7 +48,7 @@ t_queue		*find_id_room(t_anthill *anthill, t_queue *queue, int id)
 	}
 	return (queue);
 }
-		
+
 void		algo_bfs(t_anthill *anthill)
 {
 	t_queue *queue;
@@ -46,10 +58,9 @@ void		algo_bfs(t_anthill *anthill)
 	queue = push_queue(queue, anthill->start);
 	anthill->path_len[anthill->start] = 0;
 	anthill->used[anthill->start] = 1;
-	
 	while (!empty_queue(queue))
 	{
-		id_room = queue->num; 
+		id_room = queue->num;
 		queue = pop_queue(queue);
 		if (id_room == anthill->end)
 			continue ;

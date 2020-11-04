@@ -1,12 +1,23 @@
-# include "lem_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/04 14:56:22 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/04 17:54:47 by fjessi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lem_in.h"
 
 static int	count_of_ants(t_anthill *anthill)
 {
 	char	*line;
-	int 	res;
+	int		res;
 
-	res = 0;
-	while(get_next_line(0, &line) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#' && line[1] != '#')
 		{
@@ -14,7 +25,7 @@ static int	count_of_ants(t_anthill *anthill)
 			free(line);
 			continue ;
 		}
-		else if (ft_strchr(line, ' ') != NULL || (ft_atoi(line)) <= 0)
+		else if (ft_strchr(line, ' ') != NULL || (ft_atoi_new(line)) <= 0)
 		{
 			free(line);
 			exit_error();
@@ -22,7 +33,7 @@ static int	count_of_ants(t_anthill *anthill)
 		else
 		{
 			map_add(&(anthill->map), ft_strdup(line));
-			res = ft_atoi(line);
+			res = ft_atoi_new(line);
 			free(line);
 			return (res);
 		}
@@ -30,7 +41,7 @@ static int	count_of_ants(t_anthill *anthill)
 	return (0);
 }
 
-int	is_hash(char *str)
+int			is_hash(char *str)
 {
 	if (!ft_strcmp(str, "##start"))
 		return (START);
@@ -41,36 +52,28 @@ int	is_hash(char *str)
 	else if (str[0] == '#' && str[1] == '#')
 		return (IGNOR);
 	else
-		return(0);	
+		return (0);
 }
 
-void	detect_room(t_anthill *anthill, char *line, int *status)
+void		detect_room(t_anthill *anthill, char *line, int *status)
 {
 	char	**array;
-	
+
 	array = ft_strsplit(line, ' ');
 	if (*status == 3)
 		*status = 0;
-	//printf("status = %d\n", *status);
-	//printf ("start = %d\nend = %d\n", anthill->start, anthill->end);
 	room_add(anthill, room_new(array[0], ft_atoi(array[1]), ft_atoi(array[2]), *status));
 	if (*status == 1 && anthill->start == -1)
 		anthill->start = anthill->num_of_rooms;
 	else if (*status == 2 && anthill->end == -1)
 		anthill->end = anthill->num_of_rooms;
-	/*else
-	{
-		//free anthill ...
-		printf("?\n");
-		exit_error ();
-	}*/
 	*status = 0;
 	anthill->num_of_rooms++;
 	ft_free_split(array, 3);
 	return ;
 }
 
-int	is_room(char *str)
+int			is_room(char *str)
 {
 	char	**array;
 
@@ -79,26 +82,25 @@ int	is_room(char *str)
 	array = ft_strsplit(str, ' ');
 	if (array[0][0] == 'L' || ft_isdigit(ft_atoi_new(array[1])) == 0 || ft_isdigit(ft_atoi_new(array[2])) == 0)
 	{
-		//printf("!\n");
 		ft_free_split(array, 3);
-		exit_error ();
+		exit_error();
 	}
 	ft_free_split(array, 3);
 	return (1);
 }
 
-int		is_links(char *str)
+int			is_links(char *str)
 {
 	if (ft_strchr(str, '-') == NULL)
 		return (0);
 	return (1);
 }
 
-int 	create_table_links(t_anthill *anthill)
+int			create_table_links(t_anthill *anthill)
 {
-	int count;
-	t_room *room;
-	int i;
+	int		count;
+	t_room	*room;
+	int		i;
 
 	count = 0;
 	room = anthill->room_list;
@@ -123,24 +125,42 @@ int 	create_table_links(t_anthill *anthill)
 		room = room->next;
 		count++;
 	}
-	anthill->start = anthill->num_of_rooms - anthill->start -1;
+	anthill->start = anthill->num_of_rooms - anthill->start - 1;
 	anthill->end = anthill->num_of_rooms - anthill->end - 1;
 	return (0);
 }
 
-void	links_add(t_anthill *anthill, char *line)
+static void	check_name_room(t_anthill *anthill, char *str1, char *str2)
 {
-	char **str;
-	int first;
-	int second;
-	int num;
+	t_room	*room;
+	int		res;
+
+	room = anthill->room_list;
+	res = 0;
+	while (room)
+	{
+		if (ft_strequ(room->name, str1) || ft_strequ(room->name, str2))
+			res++;
+		room = room->next;
+	}
+	if (res != 2)
+		exit_error(); //free all
+}
+
+void		links_add(t_anthill *anthill, char *line)
+{
+	char	**str;
+	int		first;
+	int		second;
+	int		num;
 
 	if (anthill->table_links == NULL && anthill->table_name == NULL)
 	{
 		if (create_table_links(anthill))
-			exit_error (); //free all
+			exit_error(); //free all
 	}
 	str = ft_strsplit(line, '-');
+	check_name_room(anthill, str[0], str[1]);
 	num = anthill->num_of_rooms - 1;
 	while (num >= 0)
 	{
@@ -150,7 +170,6 @@ void	links_add(t_anthill *anthill, char *line)
 			second = num;
 		num--;
 	}
-	//printf ("first = %d\n second = %d\n", first, second);
 	anthill->table_links[first][second] = 1;
 	anthill->table_links[second][first] = 1;
 }
@@ -163,14 +182,13 @@ static void	check_rooms(t_anthill *anthill)
 	status = 0;
 	while (get_next_line(0, &line) > 0)
 	{
-		//printf("line = %s\n", line);
-		if(is_hash(line) != 0)
+		if (is_hash(line) != 0)
 		{
-			status = is_hash(line);//printf("status = %d\n", status);
+			status = is_hash(line);
 			map_add(&(anthill->map), ft_strdup(line));
 			free(line);
 		}
-		else if (is_room(line))
+		else if (is_room(line) && anthill->table_links == NULL)
 		{
 			detect_room(anthill, line, &status);
 			map_add(&(anthill->map), ft_strdup(line));
@@ -179,33 +197,22 @@ static void	check_rooms(t_anthill *anthill)
 		else if (is_links(line) && anthill->start != -1 && anthill->end != -1)
 		{
 			links_add(anthill, line);
-			//print_table(anthill);
 			map_add(&(anthill->map), ft_strdup(line));
 			free(line);
 		}
 		else
 		{
-			exit_error ();
+			exit_error();
 			//free all
 		}
-		
 	}
 }
 
 void		parse(t_anthill *anthill)
 {
 	if ((anthill->num_ants = count_of_ants(anthill)) <= 0)
-		exit_error ();
-	//printf("ants = %d\n", anthill->num_ants);
-	
+		exit_error();
 	check_rooms(anthill);
-	
-	//print_table(anthill);
 	if (anthill->table_links == NULL || anthill->room_list == NULL)
-	 	exit_error ();
-	//print_table(anthill);
-	//print_map(anthill);
-	//printf("start = %d\n", anthill->start);
-	//printf("end = %d\n", anthill->end);
-	//printf("ok\n");
+		exit_error();
 }

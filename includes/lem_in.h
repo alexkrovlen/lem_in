@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lem_in.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/04 14:50:34 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/04 16:30:57 by fjessi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEM_IN_H
 # define LEM_IN_H
 # include <stdlib.h>
@@ -26,7 +38,6 @@ typedef struct		s_room
 typedef struct		s_ant
 {
 	int				num_ant;
-	//int				num_way;
 	struct s_ant	*next;
 }					t_ant;
 
@@ -52,7 +63,7 @@ typedef struct		s_anthill
 	int				num_of_rooms;
 	t_room			*room_list;
 	t_way			*head_ways;
-	int				**table_links; // можно попробовать сделать структуру соседей чтоб потом удалять
+	int				**table_links;
 	char			**table_name;
 	int				start;
 	int				end;
@@ -74,7 +85,7 @@ void				parse(t_anthill *anthill);
 t_anthill			*init_anthill(void);
 void				map_add(t_map **head, char *str);
 void				exit_error(void);
-void  				ft_free_split(char **str, int j);
+void				ft_free_split(char **str, int j);
 void				room_add(t_anthill *anthill, t_room *room);
 t_room				*room_new(char *name, int x, int y, int status);
 int					ft_atoi_new(char *str);
@@ -82,8 +93,8 @@ void				detect_room(t_anthill *anthill, char *line, int *status);
 int					is_room(char *str);
 int					is_hash(char *str);
 int					is_links(char *str);
-void 				print_table(t_anthill *anthill);
-void 				print_map(t_anthill *anthill);
+void				print_table(t_anthill *anthill);
+void				print_map(t_anthill *anthill);
 void				this_is_match(t_anthill *anthill);
 void				algo(t_anthill *anthill);
 void				algo_bfs(t_anthill *anthill);
@@ -92,7 +103,7 @@ t_queue				*pop_queue(t_queue *q);
 int					empty_queue(t_queue *q);
 void				all_ways(t_anthill *anthill);
 void				run_ants(t_anthill *anthill);
-void 				print_way(int **res, t_anthill *anthill, int max_len);
-void				print_ants(int **res, t_anthill *anthill, int max_len);
+void				print_way(int **res, t_anthill *anthill, int max_len);
+void				print_ants(long long int **res, t_anthill *anthill, int max_len);
 
 #endif
