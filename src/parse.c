@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:56:22 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 17:54:47 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/04 20:11:54 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static int	count_of_ants(t_anthill *anthill)
 	return (0);
 }
 
-int			is_hash(char *str)
+int			is_hash(char *str, t_anthill *anthill)
 {
-	if (!ft_strcmp(str, "##start"))
+	if ((!ft_strcmp(str, "##start")) && anthill->start == -1)
 		return (START);
-	else if (!ft_strcmp(str, "##end"))
+	else if ((!ft_strcmp(str, "##end")) && anthill->end == -1)
 		return (END);
 	else if (str[0] == '#' && str[1] != '#')
 		return (COMMENT);
-	else if (str[0] == '#' && str[1] == '#')
+	else if (str[0] == '#' && str[1] == '#' && (ft_strcmp(str, "##start") && ft_strcmp(str, "##end")))
 		return (IGNOR);
 	else
 		return (0);
@@ -58,11 +58,17 @@ int			is_hash(char *str)
 void		detect_room(t_anthill *anthill, char *line, int *status)
 {
 	char	**array;
+	int		x;
+	int		y;
 
 	array = ft_strsplit(line, ' ');
 	if (*status == 3)
 		*status = 0;
-	room_add(anthill, room_new(array[0], ft_atoi(array[1]), ft_atoi(array[2]), *status));
+	x = ft_atoi_new(array[1]);
+	y = ft_atoi_new(array[2]);
+	if (x == -1 || y == -1)
+		exit_error();
+	room_add(anthill, room_new(array[0], x, y, *status));
 	if (*status == 1 && anthill->start == -1)
 		anthill->start = anthill->num_of_rooms;
 	else if (*status == 2 && anthill->end == -1)
@@ -182,9 +188,9 @@ static void	check_rooms(t_anthill *anthill)
 	status = 0;
 	while (get_next_line(0, &line) > 0)
 	{
-		if (is_hash(line) != 0)
+		if (is_hash(line, anthill) != 0)
 		{
-			status = is_hash(line);
+			status = is_hash(line, anthill);
 			map_add(&(anthill->map), ft_strdup(line));
 			free(line);
 		}

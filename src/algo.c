@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:42:07 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 16:56:54 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/04 19:26:56 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,16 @@ static void			set_ants_to_ways(t_anthill *anthill)
 		size_way = size_way + head->size_way;
 		head = head->next;
 	}
-	mod = anthill->max_path_len % anthill->num_of_ways;
 	head = anthill->head_ways;
 	diff = (size_way + anthill->num_ants) / anthill->num_of_ways;
+	mod = (size_way + anthill->num_ants) % anthill->num_of_ways;
 	while (head)
 	{
 		if (diff - head->size_way > 0)
-			head->size_ant = diff - head->size_way;
+		{
+			head->size_ant = mod > 0 ? diff - head->size_way + 1 : diff - head->size_way;
+			mod = mod > 0 ? mod - 1 : mod;
+		}
 		else
 			head->size_ant = 0;
 		if (head->first_ant == 1)
@@ -141,7 +144,7 @@ static void			set_ants_to_ways(t_anthill *anthill)
 			head->first_ant = (head->size_way - size_way_pr) * (num_cur - num_fr) + first_ant_pr + 1;
 		first_ant_pr = head->first_ant;
 		num_cur++;
-		size_way_pr = head->size_way;
+		size_way_pr = head->size_way;printf("si an1 = %d\n", head->size_ant);
 		head = head->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:50:34 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 16:30:57 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/04 19:54:42 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_room				*room_new(char *name, int x, int y, int status);
 int					ft_atoi_new(char *str);
 void				detect_room(t_anthill *anthill, char *line, int *status);
 int					is_room(char *str);
-int					is_hash(char *str);
+int					is_hash(char *str, t_anthill *anthill);
 int					is_links(char *str);
 void				print_table(t_anthill *anthill);
 void				print_map(t_anthill *anthill);
@@ -103,7 +103,7 @@ t_queue				*pop_queue(t_queue *q);
 int					empty_queue(t_queue *q);
 void				all_ways(t_anthill *anthill);
 void				run_ants(t_anthill *anthill);
-void				print_way(int **res, t_anthill *anthill, int max_len);
+void				print_way(long long int **res, t_anthill *anthill, int max_len);
 void				print_ants(long long int **res, t_anthill *anthill, int max_len);
 
 #endif

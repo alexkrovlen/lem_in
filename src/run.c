@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:59:54 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 17:55:27 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/04 19:27:53 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,14 +193,14 @@ void				run_ants(t_anthill *anthill)
 		}
 		head = head->next;
 	}
-	//print_way( res, anthill, max_len);
+	//print_way(res, anthill, max_len);
 	print_ants(res, anthill, max_len);
 }
 
-void				print_way(int **res, t_anthill *anthill, int max_len)
+void				print_way(long long int **res, t_anthill *anthill, int max_len)
 {
-	int i;
-	int j;
+	long long int i;
+	long long int j;
 
 	i = 0;
 	j = 0;
