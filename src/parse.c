@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:56:22 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 20:11:54 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/04 21:11:19 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int			is_hash(char *str, t_anthill *anthill)
 		return (END);
 	else if (str[0] == '#' && str[1] != '#')
 		return (COMMENT);
-	else if (str[0] == '#' && str[1] == '#' && (ft_strcmp(str, "##start") && ft_strcmp(str, "##end")))
+	else if (str[0] == '#' && str[1] == '#' && \
+	(ft_strcmp(str, "##start") && ft_strcmp(str, "##end")))
 		return (IGNOR);
 	else
 		return (0);
@@ -86,7 +87,8 @@ int			is_room(char *str)
 	if (ft_word_count(str, ' ') != 3)
 		return (0);
 	array = ft_strsplit(str, ' ');
-	if (array[0][0] == 'L' || ft_isdigit(ft_atoi_new(array[1])) == 0 || ft_isdigit(ft_atoi_new(array[2])) == 0)
+	if (array[0][0] == 'L' || ft_isdigit(ft_atoi_new(array[1])) == 0 \
+	|| ft_isdigit(ft_atoi_new(array[2])) == 0)
 	{
 		ft_free_split(array, 3);
 		exit_error();
@@ -102,19 +104,48 @@ int			is_links(char *str)
 	return (1);
 }
 
+int		create_table_links2(t_anthill *anthill, t_room *room)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (count < anthill->num_of_rooms)
+	{
+		if (!(anthill->table_links[count] = (int *)ft_memalloc(sizeof(int)\
+		* anthill->num_of_rooms)))
+			return (1);
+		else
+		{
+			while (i < anthill->num_of_rooms)
+			{
+				anthill->table_links[count][i] = 0;
+				i++;
+			}
+		}
+		anthill->table_name[count] = ft_strdup(room->name);
+		room = room->next;
+		count++;
+	}
+	return (0);
+}
+
 int			create_table_links(t_anthill *anthill)
 {
-	int		count;
+	//int		count;
 	t_room	*room;
-	int		i;
+	//int		i;
 
-	count = 0;
+	//count = 0;
 	room = anthill->room_list;
-	if (!(anthill->table_links = (int **)ft_memalloc(sizeof(int *) * anthill->num_of_rooms)))
+	if (!(anthill->table_links = (int **)ft_memalloc(sizeof(int *)\
+	* anthill->num_of_rooms)))
 		return (1);
-	if (!(anthill->table_name = (char **)ft_memalloc(sizeof(char *) * anthill->num_of_rooms)))
+	if (!(anthill->table_name = (char **)ft_memalloc(sizeof(char *)\
+	* anthill->num_of_rooms)))
 		return (1);
-	while (count < anthill->num_of_rooms)
+	/*while (count < anthill->num_of_rooms)
 	{
 		i = 0;
 		if (!(anthill->table_links[count] = (int *)ft_memalloc(sizeof(int) * anthill->num_of_rooms)))
@@ -130,9 +161,14 @@ int			create_table_links(t_anthill *anthill)
 		anthill->table_name[count] = ft_strdup(room->name);
 		room = room->next;
 		count++;
+	}*/
+	if (!create_table_links2(anthill, room))
+	{
+		anthill->start = anthill->num_of_rooms - anthill->start - 1;
+		anthill->end = anthill->num_of_rooms - anthill->end - 1;
 	}
-	anthill->start = anthill->num_of_rooms - anthill->start - 1;
-	anthill->end = anthill->num_of_rooms - anthill->end - 1;
+	else
+		return (1);
 	return (0);
 }
 
