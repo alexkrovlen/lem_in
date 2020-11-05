@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/04 14:53:11 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:01:23 by fjessi           ###   ########.fr       */
+/*   Created: 2020/11/05 21:06:00 by fjessi            #+#    #+#             */
+/*   Updated: 2020/11/05 21:06:45 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		main(void)
+static t_map		*free_m(t_map *m)
 {
-	t_anthill	*anthill;
+	t_map	*next;
+	t_map	*prev;
 
-	anthill = init_anthill();
-	parse(anthill);
-	algo(anthill);
-	print_map(anthill);
-	run_ants(anthill);
-	free_all(anthill);
-	return (0);
+	next = m->next;
+	prev = m->prev;
+	if (prev != NULL)
+		prev->next = m->next;
+	if (next != NULL)
+		next->prev = m->prev;
+	free(m->str);
+	free(m);
+	return (next);
 }
+
+void			free_map(t_anthill *anthill)
+{
+	while (anthill->map)
+	{
+		anthill->map = free_m(anthill->map);
+	}
+	free(anthill->map);
+}
+

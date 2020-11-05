@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:59:54 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 20:26:42 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 21:29:00 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void				run_ants(t_anthill *anthill)
 	}
 	//print_way(res, anthill, max_len);
 	print_ants(res, anthill, max_len);
+	free_ways(anthill);
 	free_res(res, anthill->num_ants);
 }
 

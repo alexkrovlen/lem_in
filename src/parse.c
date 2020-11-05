@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:56:22 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 19:10:53 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 21:34:10 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void		links_add(t_anthill *anthill, char *line)
 	}
 	anthill->table_links[first][second] = 1;
 	anthill->table_links[second][first] = 1;
+	ft_free_split(str, 2);
 }
 
 static void	check_rooms(t_anthill *anthill)

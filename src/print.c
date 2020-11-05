@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:37:47 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 20:20:05 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 21:04:30 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,17 @@ void	print_ants(long long int **res, t_anthill *anthill, int max_len)
 			break ;
 		j++;
 	}
+}
+
+void	free_res(long long int **res, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(res[i]);
+		i++;
+	}
+	free(res);
 }

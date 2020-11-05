@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:50:34 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 20:26:58 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 21:26:57 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,10 @@ void				print_ants(long long int **res, t_anthill *anthill, int max_len);
 void				free_error(t_anthill *anthill, char *line);
 void				free_all(t_anthill *anthill);
 void				free_res(long long int **res, int size);
+void				free_anthill(t_anthill *anthill);
+void				free_map(t_anthill *anthill);
+void				free_ways(t_anthill *anthill);
+void				free_ant(t_way *w);
+void				free_way(t_way *way);
 
 #endif
