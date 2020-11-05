@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:58:34 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 16:57:51 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 20:28:16 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ int		empty_queue(t_queue *q)
 t_queue	*pop_queue(t_queue *q)
 {
 	t_queue *tmp;
+	t_queue *fr;
 
 	if (q == NULL)
 		return (NULL);
+	fr = q;
 	tmp = q->next;
+	free(fr);
 	return (tmp);
 }
 

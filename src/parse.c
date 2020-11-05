@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:56:22 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 21:11:19 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 19:10:53 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ static int	count_of_ants(t_anthill *anthill)
 		}
 		else if (ft_strchr(line, ' ') != NULL || (ft_atoi_new(line)) <= 0)
 		{
-			free(line);
-			exit_error();
+			//free(line);
+			//exit_error();
+			free_error(anthill, line);
 		}
 		else
 		{
@@ -68,7 +69,7 @@ void		detect_room(t_anthill *anthill, char *line, int *status)
 	x = ft_atoi_new(array[1]);
 	y = ft_atoi_new(array[2]);
 	if (x == -1 || y == -1)
-		exit_error();
+		free_error(anthill, NULL);
 	room_add(anthill, room_new(array[0], x, y, *status));
 	if (*status == 1 && anthill->start == -1)
 		anthill->start = anthill->num_of_rooms;
@@ -88,10 +89,11 @@ int			is_room(char *str)
 		return (0);
 	array = ft_strsplit(str, ' ');
 	if (array[0][0] == 'L' || ft_isdigit(ft_atoi_new(array[1])) == 0 \
-	|| ft_isdigit(ft_atoi_new(array[2])) == 0)
+		|| ft_isdigit(ft_atoi_new(array[2])) == 0)
 	{
 		ft_free_split(array, 3);
-		exit_error();
+		//exit_error();
+		return (0);
 	}
 	ft_free_split(array, 3);
 	return (1);
@@ -186,7 +188,7 @@ static void	check_name_room(t_anthill *anthill, char *str1, char *str2)
 		room = room->next;
 	}
 	if (res != 2)
-		exit_error(); //free all
+		free_error(anthill, NULL);
 }
 
 void		links_add(t_anthill *anthill, char *line)
@@ -199,7 +201,7 @@ void		links_add(t_anthill *anthill, char *line)
 	if (anthill->table_links == NULL && anthill->table_name == NULL)
 	{
 		if (create_table_links(anthill))
-			exit_error(); //free all
+			free_error(anthill, line);//free all
 	}
 	str = ft_strsplit(line, '-');
 	check_name_room(anthill, str[0], str[1]);
@@ -244,8 +246,9 @@ static void	check_rooms(t_anthill *anthill)
 		}
 		else
 		{
-			exit_error();
+			//exit_error();
 			//free all
+			free_error(anthill, line);
 		}
 	}
 }
@@ -253,8 +256,10 @@ static void	check_rooms(t_anthill *anthill)
 void		parse(t_anthill *anthill)
 {
 	if ((anthill->num_ants = count_of_ants(anthill)) <= 0)
-		exit_error();
+		free_error(anthill, NULL);
+		//exit_error();
 	check_rooms(anthill);
 	if (anthill->table_links == NULL || anthill->room_list == NULL)
-		exit_error();
+		free_error(anthill, NULL);
+		//exit_error();
 }

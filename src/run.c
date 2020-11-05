@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:59:54 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 19:27:53 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 20:26:42 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int			find_num_ant(t_anthill *anthill, t_way *head)
 
 	i = 0;
 	h = head;
-	str = (int *)ft_memalloc(sizeof(int) * (anthill->num_of_ways - 1));
+	if (!(str = (int *)ft_memalloc(sizeof(int) * (anthill->num_of_ways - 1))))
+		return (-1);
 	while (h->next)
 	{
 		str[i] = h->next->first_ant;
@@ -49,6 +50,7 @@ static int			find_num_ant(t_anthill *anthill, t_way *head)
 			i++;
 		}
 	}
+	free(str);
 	num_ant = head->struct_ant->num_ant + num_way;
 	if (num_ant > anthill->num_ants)
 		return (-1);
@@ -70,7 +72,8 @@ static t_ant		*init_struct_ant(t_way *head, int num_ants)
 {
 	t_ant *struct_ant;
 
-	struct_ant = (t_ant *)ft_memalloc(sizeof(t_ant));
+	if (!(struct_ant = (t_ant *)ft_memalloc(sizeof(t_ant))))
+		return (NULL);
 	if (head->first_ant > num_ants)
 		struct_ant->num_ant = 0;
 	else
@@ -195,6 +198,7 @@ void				run_ants(t_anthill *anthill)
 	}
 	//print_way(res, anthill, max_len);
 	print_ants(res, anthill, max_len);
+	free_res(res, anthill->num_ants);
 }
 
 void				print_way(long long int **res, t_anthill *anthill, int max_len)

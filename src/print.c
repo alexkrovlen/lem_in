@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:37:47 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 16:55:02 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 20:20:05 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	this_is_match(t_anthill *anthill)
 		i++;
 	}
 	ft_printf("\n");
+	free_all(anthill);
 	exit(0); //free all
 }
 

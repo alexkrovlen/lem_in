@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:42:07 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 19:26:56 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/05 20:33:09 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void				init_for_alg(t_anthill *anthill)
 	if (!(anthill->used = (int *)ft_memalloc(sizeof(int) * anthill->num_of_rooms))\
 		|| !(anthill->parent = (int *)ft_memalloc(sizeof(int) * anthill->num_of_rooms))\
 		|| !(anthill->path_len = (int *)ft_memalloc(sizeof(int) * anthill->num_of_rooms)))
-		exit_error (); //free all
+		free_error(anthill, NULL); //free all
 	anthill->max_path_len = anthill->num_of_rooms + anthill->num_ants;
 }
 
@@ -120,7 +120,7 @@ static void			set_ants_to_ways(t_anthill *anthill)
 	size_way = 0;
 	head = anthill->head_ways;
 	if (head == NULL)
-		exit_error();
+		free_error(anthill, NULL);
 	while (head)
 	{
 		size_way = size_way + head->size_way;
@@ -131,7 +131,7 @@ static void			set_ants_to_ways(t_anthill *anthill)
 	mod = (size_way + anthill->num_ants) % anthill->num_of_ways;
 	while (head)
 	{
-		if (diff - head->size_way > 0)
+		if (diff - head->size_way >= 0)//was >
 		{
 			head->size_ant = mod > 0 ? diff - head->size_way + 1 : diff - head->size_way;
 			mod = mod > 0 ? mod - 1 : mod;
@@ -144,7 +144,7 @@ static void			set_ants_to_ways(t_anthill *anthill)
 			head->first_ant = (head->size_way - size_way_pr) * (num_cur - num_fr) + first_ant_pr + 1;
 		first_ant_pr = head->first_ant;
 		num_cur++;
-		size_way_pr = head->size_way;printf("si an1 = %d\n", head->size_ant);
+		size_way_pr = head->size_way;
 		head = head->next;
 	}
 }
