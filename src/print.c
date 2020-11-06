@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:37:47 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:04:30 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:57:39 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	this_is_match(t_anthill *anthill)
 	}
 	ft_printf("\n");
 	free_all(anthill);
-	exit(0); //free all
+	exit(0);
 }
 
 void	print_ants(long long int **res, t_anthill *anthill, int max_len)
@@ -93,15 +93,24 @@ void	print_ants(long long int **res, t_anthill *anthill, int max_len)
 	}
 }
 
-void	free_res(long long int **res, int size)
+void	print_way(long long int **res, t_anthill *anthill, int max_len)
 {
-	int	i;
+	long long int i;
+	long long int j;
 
 	i = 0;
-	while (i < size)
+	j = 0;
+	ft_printf("_________________________________________\n");
+	while (i < anthill->num_ants)
 	{
-		free(res[i]);
+		j = 0;
+		ft_printf("%d | ", i);
+		while (j < anthill->num_ants * max_len)
+		{
+			ft_printf("%d  ", res[i][j]);
+			j++;
+		}
+		ft_printf("\n");
 		i++;
 	}
-	free(res);
 }

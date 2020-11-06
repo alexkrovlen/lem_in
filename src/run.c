@@ -6,153 +6,80 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:59:54 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:29:00 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 23:12:11 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int			find_num_ant(t_anthill *anthill, t_way *head)
+static long long int	**init_res(t_anthill *anthill, \
+						long long int **res, int max_len)
 {
-	int		num_ant;
-	int		num_way;
-	t_way	*h;
-	int		*str;
-	int		i;
-
-	i = 0;
-	h = head;
-	if (!(str = (int *)ft_memalloc(sizeof(int) * (anthill->num_of_ways - 1))))
-		return (-1);
-	while (h->next)
-	{
-		str[i] = h->next->first_ant;
-		i++;
-		h = h->next;
-	}
-	str[i] = '\0';
-	i = 0;
-	num_ant = head->first_ant;
-	num_way = 1;
-	h = anthill->head_ways;
-	while (head->first_ant != h->first_ant)
-	{
-		num_way++;
-		h = h->next;
-	}
-	while (head->struct_ant->next)
-		head->struct_ant = head->struct_ant->next;
-	if (head->struct_ant->num_ant + num_way >= str[i])
-	{
-		while (head->struct_ant->num_ant + num_way >= str[i] && str[i] != '\0')
-		{
-			num_way++;
-			i++;
-		}
-	}
-	free(str);
-	num_ant = head->struct_ant->num_ant + num_way;
-	if (num_ant > anthill->num_ants)
-		return (-1);
-	return (num_ant);
-}
-
-static t_ant		*new_ant(t_anthill *anthill, t_way *head)
-{
-	t_ant *list;
-
-	if (!(list = (t_ant *)ft_memalloc(sizeof(t_ant))))
-		return (NULL);
-	list->num_ant = find_num_ant(anthill, head);
-	list->next = NULL;
-	return (list);
-}
-
-static t_ant		*init_struct_ant(t_way *head, int num_ants)
-{
-	t_ant *struct_ant;
-
-	if (!(struct_ant = (t_ant *)ft_memalloc(sizeof(t_ant))))
-		return (NULL);
-	if (head->first_ant > num_ants)
-		struct_ant->num_ant = 0;
-	else
-		struct_ant->num_ant = head->first_ant;
-	struct_ant->next = NULL;
-	return (struct_ant);
-}
-
-static void			free_last_list(t_ant *ant)
-{
-	t_ant *list;
-
-	list = ant;
-	while (ant->next->next)
-	{
-		ant = ant->next;
-	}
-	free(ant->next);
-	ant->next = NULL;
-	ant = list;
-}
-
-static void			size_ant(t_way *head)
-{
-	t_way	*way;
-	t_ant	*ant;
-	int		count;
-
-	way = head;
-	while (head)
-	{
-		count = 0;
-		ant = head->struct_ant;
-		while (ant && ant->num_ant > 0)
-		{
-			ant = ant->next;
-			count++;
-		}
-		head->size_ant = count;
-		head = head->next;
-	}
-	head = way;
-}
-
-void				run_ants(t_anthill *anthill)
-{
-	long long int **res;
 	long long int i;
 	long long int j;
-	int max_len;
-	t_way *head;
 
-	res = (long long int **)ft_memalloc(sizeof(long long int *) * anthill->num_ants);
 	i = 0;
 	j = 0;
-	head = anthill->head_ways;
-	while (head->next)
-		head = head->next;
-	max_len = head->size_way;
 	while (i < anthill->num_ants)
 	{
 		j = 0;
-		res[i] = (long long int *)ft_memalloc(sizeof(long long int) * (anthill->num_ants * max_len));
+		res[i] = (long long int *)ft_memalloc(sizeof(long long int) * \
+				(anthill->num_ants * max_len));
 		while (j < anthill->num_ants * max_len)
 			res[i][j++] = -1;
 		i++;
 	}
-	i = 0;
+	return (res);
+}
+
+static void				fill_res_help(t_way *head, long long int **res, int i)
+{
 	long long int count;
 	long long int w;
-	head = anthill->head_ways;
-	while (head)
+	long long int j;
+
+	count = 0;
+	w = 0;
+	j = 0;
+	while (j < head->zero + head->size_way)
 	{
-		head->struct_ant = init_struct_ant(head, anthill->num_ants);
+		while (count++ < head->zero)
+			j++;
+		res[i][j] = head->way[w];
+		w++;
+		j++;
+	}
+}
+
+static long long int	**fill_res(t_way *head, long long int **res)
+{
+	long long int	i;
+	t_ant			*temp;
+
+	while (head && head->size_ant > 0)
+	{
+		temp = head->struct_ant;
+		while (temp)
+		{
+			i = 0;
+			while (temp->num_ant - 1 != i)
+				i++;
+			fill_res_help(head, res, i);
+			head->zero++;
+			temp = temp->next;
+		}
 		head = head->next;
 	}
+	return (res);
+}
+
+static void				run_ants2(t_anthill *anthill)
+{
+	t_way			*head;
+	t_ant			*tmp;
+	long long int	ttt;
+
 	head = anthill->head_ways;
-	long long int ttt = 1;
-	t_ant *tmp;
 	while (head)
 	{
 		ttt = 1;
@@ -171,55 +98,32 @@ void				run_ants(t_anthill *anthill)
 		head->struct_ant = tmp;
 		head = head->next;
 	}
-	head = anthill->head_ways;
-	size_ant(head);
-	while (head && head->size_ant > 0)
-	{
-		while (head->struct_ant)
-		{
-			i = 0;
-			w = 0;
-			count = 0;
-			j = 0;
-			while (head->struct_ant->num_ant - 1 != i)
-				i++;
-			while (j < head->zero + head->size_way)
-			{
-				while (count++ < head->zero)
-					j++;
-				res[i][j] = head->way[w];
-				w++;
-				j++;
-			}
-			head->zero++;
-			head->struct_ant = head->struct_ant->next;
-		}
-		head = head->next;
-	}
-	//print_way(res, anthill, max_len);
-	print_ants(res, anthill, max_len);
-	free_ways(anthill);
-	free_res(res, anthill->num_ants);
 }
 
-void				print_way(long long int **res, t_anthill *anthill, int max_len)
+void					run_ants(t_anthill *anthill)
 {
-	long long int i;
-	long long int j;
+	long long int	**res;
+	int				max_len;
+	t_way			*head;
 
-	i = 0;
-	j = 0;
-	ft_printf("_________________________________________\n");
-	while (i < anthill->num_ants)
+	res = (long long int **)ft_memalloc(sizeof(long long int *) * \
+			anthill->num_ants);
+	head = anthill->head_ways;
+	while (head->next)
+		head = head->next;
+	max_len = head->size_way;
+	init_res(anthill, res, max_len);
+	head = anthill->head_ways;
+	while (head)
 	{
-		j = 0;
-		ft_printf("%d | ", i);
-		while (j < anthill->num_ants * max_len)
-		{
-			ft_printf("%d  ", res[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
+		head->struct_ant = init_struct_ant(head, anthill->num_ants);
+		head = head->next;
 	}
+	head = anthill->head_ways;
+	run_ants2(anthill);
+	head = anthill->head_ways;
+	size_ant(head);
+	fill_res(head, res);
+	print_ants(res, anthill, max_len);
+	free_res(res, anthill->num_ants);
 }

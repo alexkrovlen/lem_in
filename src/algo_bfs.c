@@ -6,11 +6,19 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:39:19 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 20:25:16 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:13:00 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static void	find_id_room_two(t_anthill *anthill, int id, int j)
+{
+	anthill->parent[j] = id;
+	anthill->path_len[j] = anthill->path_len[id] + 1;
+	anthill->used[j] = 1;
+	anthill->table_links[j][id] = 0;
+}
 
 t_queue		*find_id_room(t_anthill *anthill, t_queue *queue, int id)
 {
@@ -23,19 +31,10 @@ t_queue		*find_id_room(t_anthill *anthill, t_queue *queue, int id)
 		{
 			queue = push_queue(queue, j);
 			if (j != anthill->end)
-			{
-				anthill->parent[j] = id;
-				anthill->path_len[j] = anthill->path_len[id] + 1;
-				anthill->used[j] = 1;
-				anthill->table_links[j][id] = 0;
-			}
-			else if (j == anthill->end && anthill->path_len[j] > anthill->path_len[id] + 1)
-			{
-				anthill->parent[j] = id;
-				anthill->path_len[j] = anthill->path_len[id] + 1;
-				anthill->used[j] = 1;
-				anthill->table_links[j][id] = 0;
-			}
+				find_id_room_two(anthill, id, j);
+			else if (j == anthill->end && \
+					anthill->path_len[j] > anthill->path_len[id] + 1)
+				find_id_room_two(anthill, id, j);
 			else if (j == anthill->end && anthill->path_len[j] == -1)
 			{
 				anthill->parent[j] = id;

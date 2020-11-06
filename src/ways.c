@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 15:02:32 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 19:16:15 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:24:25 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static t_way	*new_way(t_anthill *anthill)
 	int		id_room;
 
 	if (!(new = (t_way *)ft_memalloc(sizeof(t_way))))
-		free_error(anthill, NULL); //free all
+		free_error(anthill, NULL);
 	len = anthill->path_len[anthill->end];
 	if (!(new->way = (int *)ft_memalloc(sizeof(int) * len)))
-		free_error(anthill, NULL); //free all
+		free_error(anthill, NULL);
 	new->size_ant = 0;
 	new->size_way = len;
 	new->first_ant = 0;
@@ -68,4 +68,13 @@ void			all_ways(t_anthill *anthill)
 	anthill->num_of_ways++;
 	way = new_way(anthill);
 	use_way(anthill, way);
+}
+
+int				find_way(t_anthill *anthill)
+{
+	algo_bfs(anthill);
+	if (!anthill->used[anthill->end])
+		return (0);
+	all_ways(anthill);
+	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/11 20:49:09 by jojoseph          #+#    #+#              #
-#    Updated: 2020/11/05 21:06:25 by fjessi           ###   ########.fr        #
+#    Updated: 2020/11/06 23:06:35 by fjessi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ FLAGS = -Wall -Werror -Wextra
 INC = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS)
 
 SRCS_NAME = parse.c \
+			parse_two.c \
+			parse_three.c \
 			init_rooms.c \
 			error.c \
 			maps.c \
@@ -42,10 +44,13 @@ SRCS_NAME = parse.c \
 			help.c \
 			print.c \
 			algo.c \
+			algo_two.c \
 			algo_bfs.c \
 			queue.c \
 			ways.c \
 			run.c \
+			run_two.c \
+			run_three.c \
 
 SRCS = main.c $(SRCS_NAME)
 

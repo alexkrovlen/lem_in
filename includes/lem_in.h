@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:50:34 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:26:57 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 23:06:03 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,39 @@ void				room_add(t_anthill *anthill, t_room *room);
 t_room				*room_new(char *name, int x, int y, int status);
 int					ft_atoi_new(char *str);
 void				detect_room(t_anthill *anthill, char *line, int *status);
+void				check_name_room(t_anthill *anthill, char *str1, char *str2);
 int					is_room(char *str);
 int					is_hash(char *str, t_anthill *anthill);
 int					is_links(char *str);
+void				links_add(t_anthill *anthill, char *line);
 void				print_table(t_anthill *anthill);
 void				print_map(t_anthill *anthill);
 void				this_is_match(t_anthill *anthill);
+int					start_end_neighbor(t_anthill *anthill);
+int					start_have_one_link(t_anthill *anthill);
+void				bzero_for_alg(t_anthill *anthill);
+void				init_for_alg(t_anthill *anthill);
+int					find_way(t_anthill *anthill);
 void				algo(t_anthill *anthill);
 void				algo_bfs(t_anthill *anthill);
 t_queue				*push_queue(t_queue *queue, int n);
 t_queue				*pop_queue(t_queue *q);
 int					empty_queue(t_queue *q);
+t_anthill			*delete_rooms(t_anthill *anthill, int i, int j);
 void				all_ways(t_anthill *anthill);
 void				run_ants(t_anthill *anthill);
-void				print_way(long long int **res, t_anthill *anthill, int max_len);
-void				print_ants(long long int **res, t_anthill *anthill, int max_len);
+t_ant				*init_struct_ant(t_way *head, int num_ants);
+t_ant				*new_ant(t_anthill *anthill, t_way *head);
+int					find_num_ant(t_anthill *anthill, t_way *head);
+void				size_ant(t_way *head);
+void				print_way(long long int **res, t_anthill *anthill, \
+															int max_len);
+void				print_ants(long long int **res, t_anthill *anthill, \
+															int max_len);
 void				free_error(t_anthill *anthill, char *line);
 void				free_all(t_anthill *anthill);
 void				free_res(long long int **res, int size);
+void				free_last_list(t_ant *ant);
 void				free_anthill(t_anthill *anthill);
 void				free_map(t_anthill *anthill);
 void				free_ways(t_anthill *anthill);

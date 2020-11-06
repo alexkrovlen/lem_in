@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:58:47 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/04 18:48:00 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:56:22 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_coord(t_anthill *anthill, t_room *room)
 	{
 		if (tmp->coord_x == room->coord_x && tmp->coord_y == room->coord_y)
 			if (tmp->status != 1 && tmp->status != 2)
-				exit_error(); //free all
+				free_error(anthill, NULL);
 		tmp = tmp->next;
 	}
 }

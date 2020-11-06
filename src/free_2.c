@@ -6,13 +6,13 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:06:00 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:06:45 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:57:47 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_map		*free_m(t_map *m)
+static t_map	*free_m(t_map *m)
 {
 	t_map	*next;
 	t_map	*prev;
@@ -25,7 +25,7 @@ static t_map		*free_m(t_map *m)
 		next->prev = m->prev;
 	free(m->str);
 	free(m);
-	return (next);
+	return (prev);
 }
 
 void			free_map(t_anthill *anthill)
@@ -37,3 +37,15 @@ void			free_map(t_anthill *anthill)
 	free(anthill->map);
 }
 
+void			free_res(long long int **res, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(res[i]);
+		i++;
+	}
+	free(res);
+}

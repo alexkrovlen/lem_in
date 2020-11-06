@@ -6,7 +6,7 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:51:59 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:28:46 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:44:54 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	free_ant(t_way *w)
 	}
 }
 
-void		free_way(t_way *way)
+void	free_way(t_way *way)
 {
 	free_ant(way);
 	free(way->way);
 	free(way);
 }
 
-void		free_ways(t_anthill *anthill)
+void	free_ways(t_anthill *anthill)
 {
 	t_way *way;
 

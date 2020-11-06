@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word_count.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojoseph <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:26:00 by jojoseph          #+#    #+#             */
-/*   Updated: 2019/09/17 11:51:28 by jojoseph         ###   ########.fr       */
+/*   Updated: 2020/11/06 20:09:24 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	ft_word_count(char const *s, char c)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		if ((s[i] != c && s[i - 1] == c) || (s[i] != c && (int)i - 1 == -1))
+		if ((s[i] != c && (int)i - 1 == -1) || (s[i] != c && s[i - 1] == c))
 			count++;
 		i++;
 	}

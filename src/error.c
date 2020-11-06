@@ -6,13 +6,13 @@
 /*   By: fjessi <fjessi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:51:30 by fjessi            #+#    #+#             */
-/*   Updated: 2020/11/05 21:07:15 by fjessi           ###   ########.fr       */
+/*   Updated: 2020/11/06 22:44:10 by fjessi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	exit_error(void)
+void			exit_error(void)
 {
 	ft_printf("ERROR\n");
 	exit(0);
@@ -31,7 +31,7 @@ static void		free_room(t_room *room)
 	free(room);
 }
 
-void		free_anthill(t_anthill *anthill)
+void			free_anthill(t_anthill *anthill)
 {
 	int		i;
 	t_room	*tmp;
@@ -58,7 +58,7 @@ void		free_anthill(t_anthill *anthill)
 	free(anthill);
 }
 
-void	free_error(t_anthill *anthill, char *line)
+void			free_error(t_anthill *anthill, char *line)
 {
 	if (line != NULL)
 		free(line);
